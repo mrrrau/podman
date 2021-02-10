@@ -23,6 +23,7 @@ func GenerateSystemd(w http.ResponseWriter, r *http.Request) {
 		ContainerPrefix string `schema:"containerPrefix"`
 		PodPrefix       string `schema:"podPrefix"`
 		Separator       string `schema:"separator"`
+		NoHeader        bool   `schema:"noHeader"`
 	}{
 		RestartPolicy:   "on-failure",
 		StopTimeout:     util.DefaultContainerConfig().Engine.StopTimeout,
@@ -46,6 +47,7 @@ func GenerateSystemd(w http.ResponseWriter, r *http.Request) {
 		ContainerPrefix: query.ContainerPrefix,
 		PodPrefix:       query.PodPrefix,
 		Separator:       query.Separator,
+		NoHeader:        query.NoHeader,
 	}
 	report, err := containerEngine.GenerateSystemd(r.Context(), utils.GetName(r), options)
 	if err != nil {

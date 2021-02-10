@@ -71,7 +71,7 @@ type containerInfo struct {
 	pod *podInfo
 }
 
-const containerTemplate = headerTemplate + `
+const containerTemplate = `
 {{{{- if .BoundToServices}}}}
 BindsTo={{{{- range $index, $value := .BoundToServices -}}}}{{{{if $index}}}} {{{{end}}}}{{{{ $value }}}}.service{{{{end}}}}
 After={{{{- range $index, $value := .BoundToServices -}}}}{{{{if $index}}}} {{{{end}}}}{{{{ $value }}}}.service{{{{end}}}}
@@ -307,7 +307,8 @@ func executeContainerTemplate(info *containerInfo, options entities.GenerateSyst
 	// generation.  That's especially needed for embedding the PID and ID
 	// files in other fields which will eventually get replaced in the 2nd
 	// template execution.
-	templ, err := template.New("container_template").Delims("{{{{", "}}}}").Parse(containerTemplate)
+	t := generateHeaderTemplate(options) + containerTemplate
+	templ, err := template.New("container_template").Delims("{{{{", "}}}}").Parse(t)
 	if err != nil {
 		return "", errors.Wrap(err, "error parsing systemd service template")
 	}

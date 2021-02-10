@@ -18,6 +18,8 @@ type GenerateSystemdOptions struct {
 	PodPrefix string
 	// Separator - systemd unit name separator between name/id and prefix
 	Separator string
+	// NoHeader - do not create unit files headers
+	NoHeader bool
 }
 
 // GenerateSystemdReport

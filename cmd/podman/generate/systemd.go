@@ -73,6 +73,8 @@ func init() {
 	flags.StringVar(&format, formatFlagName, "", "Print the created units in specified format (json)")
 	_ = systemdCmd.RegisterFlagCompletionFunc(formatFlagName, common.AutocompleteJSONFormat)
 
+	flags.BoolVarP(&systemdOptions.NoHeader, "no-header", "", false, "Do not print header information")
+
 	flags.SetNormalizeFunc(utils.AliasFlags)
 }
 

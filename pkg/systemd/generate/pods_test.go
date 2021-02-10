@@ -7,6 +7,7 @@ import (
 	"github.com/stretchr/testify/assert"
 )
 
+// TESTS
 func TestValidateRestartPolicyPod(t *testing.T) {
 	type podInfo struct {
 		restart string

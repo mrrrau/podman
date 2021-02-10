@@ -7,6 +7,7 @@ import (
 	"github.com/gorilla/mux"
 )
 
+//TODO https://github.com/containers/podman//commit/ebfea2f4f89328ec3f74a8deedb3e727ce89ea59#diff-0e0ea79c1276a954ba0ef7f8666f920b0b770d20dde23878d880b6022c262d13
 func (s *APIServer) registerGenerateHandlers(r *mux.Router) error {
 	// swagger:operation GET /libpod/generate/{name:.*}/systemd libpod libpodGenerateSystemd
 	// ---
@@ -57,6 +58,11 @@ func (s *APIServer) registerGenerateHandlers(r *mux.Router) error {
 	//    type: string
 	//    default: "-"
 	//    description: Systemd unit name separator between name/id and prefix.
+	//  - in: query
+	//    name: noHeader
+	//    type: boolean
+	//    default: false
+	//    description: Do not print header information.
 	// produces:
 	// - application/json
 	// responses:

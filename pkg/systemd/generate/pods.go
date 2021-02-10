@@ -72,7 +72,7 @@ type podInfo struct {
 	ExecStopPost string
 }
 
-const podTemplate = headerTemplate + `Requires={{{{- range $index, $value := .RequiredServices -}}}}{{{{if $index}}}} {{{{end}}}}{{{{ $value }}}}.service{{{{end}}}}
+const podTemplate = `Requires={{{{- range $index, $value := .RequiredServices -}}}}{{{{if $index}}}} {{{{end}}}}{{{{ $value }}}}.service{{{{end}}}}
 Before={{{{- range $index, $value := .RequiredServices -}}}}{{{{if $index}}}} {{{{end}}}}{{{{ $value }}}}.service{{{{end}}}}
 
 [Service]
@@ -334,7 +334,8 @@ func executePodTemplate(info *podInfo, options entities.GenerateSystemdOptions) 
 	// generation.  That's especially needed for embedding the PID and ID
 	// files in other fields which will eventually get replaced in the 2nd
 	// template execution.
-	templ, err := template.New("pod_template").Delims("{{{{", "}}}}").Parse(podTemplate)
+	t := generateHeaderTemplate(options) + podTemplate
+	templ, err := template.New("pod_template").Delims("{{{{", "}}}}").Parse(t)
 	if err != nil {
 		return "", errors.Wrap(err, "error parsing systemd service template")
 	}
